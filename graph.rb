@@ -33,14 +33,18 @@ class Graph
 end
 
 # TODO: clean this up. working now, but only for this problem set. should be nice and recursive
-def make_graph(graph_list, g)
-    graph_list.each do |route|
+def make_graph()
+    g = Graph.new
+    list = create_graph_list('./input.txt')
+
+    list.each do |route|
         if g.routeHash[route[0]]
-            if g.routeHash[route[0]].next != false
+            if g.routeHash[route[0]].next === false
                 g.routeHash[route[0]].add_next(Edge.new(route[0], route[1], route[2].to_i))
             else
                 # this works for this specific input, but wouldn't work with another next loop
-                # how to make this recursive and nice, not hacky
+                # make this recursive and work for real, not hacky
+                # until .next != false keep putting node.next into the checker and then call add_next on it
                 g.routeHash[route[0]].next.add_next(Edge.new(route[0], route[1], route[2].to_i))
             end
         else
@@ -50,9 +54,17 @@ def make_graph(graph_list, g)
     puts g.routeHash
 end
 
+def create_graph_list(file_path)
+    File.open(file_path, 'r') do |f|
+        f.each_line do |line|
+            return graph_list = line.split(",").map(&:strip)
+        end
+    end
+end
 
 
-# MANUALLY ADDS THE NODES AND EDGES
+# create_graph_list('./input.txt')
+# # MANUALLY ADDS THE NODES AND EDGES
 # g = Graph.new
 # graph_list = ["AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"]
 # A = Node.new("A")
@@ -77,6 +89,6 @@ end
 
 
 
-g = Graph.new
-graph_list = ["AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"]
-make_graph(graph_list, g)
+# g = Graph.new
+# graph_list = ["AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"]
+make_graph()
