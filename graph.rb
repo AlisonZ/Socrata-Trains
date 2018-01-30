@@ -51,7 +51,8 @@ def make_graph()
             g.routeHash[route[0]] = Edge.new(route[0], route[1], route[2].to_i)
         end
     end
-    puts g.routeHash
+
+    return g
 end
 
 def create_graph_list(file_path)
@@ -62,8 +63,9 @@ def create_graph_list(file_path)
     end
 end
 
+g = make_graph()
+puts g.routeHash
 
-# create_graph_list('./input.txt')
 # # MANUALLY ADDS THE NODES AND EDGES
 # g = Graph.new
 # graph_list = ["AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"]
@@ -85,10 +87,3 @@ end
 # g.routeHash[E] = Edge.new("E", "B", 3)
 #
 # puts g.routeHash
-
-
-
-
-# g = Graph.new
-# graph_list = ["AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"]
-make_graph()
