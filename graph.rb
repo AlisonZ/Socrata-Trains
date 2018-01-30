@@ -17,6 +17,8 @@ class Edge
         @next = false
     end
 
+# TODO: remove this function if it does not end up being used recursively
+# can do the same thing now as just updating the .next feature of the edge currently on
     def add_next(edge)
         self.next = edge
         return edge
