@@ -17,8 +17,8 @@ class Edge
         @next = false
     end
 
-# TODO: remove this function if it does not end up being used recursively
-# can do the same thing now as just updating the .next feature of the edge currently on
+    # TODO: remove this function if it does not end up being used recursively
+    # can do the same thing now as just updating the .next feature of the edge currently on
     def add_next(edge)
         self.next = edge
         return edge
@@ -33,8 +33,7 @@ class Graph
         self.routeHash = {}
     end
 
-    def maxStops(start, final, maxStops)
-        # puts final
+    def numStops(start, final, maxStops)
         return findRoutes(start, final, 0, maxStops)
     end
 
@@ -58,7 +57,7 @@ class Graph
             start.visited = true
             edge = self.routeHash[start]
 
-             if edge
+            if edge
                 if edge.destination.name === final
                     routes +=1
                     edge = edge.next
@@ -68,6 +67,45 @@ class Graph
                     routes +=1
                     routes +=self.findRoutes(edge.destination.name, final, depth, maxStops)
                     depth -=1
+                end
+                edge = edge.next
+            end
+        end
+
+        start.visited = false
+        return routes
+    end
+
+
+    def exactStops(start, final, exactStops)
+        return exactStopsRoutes(start, final, 0, exactStops)
+    end
+
+    def exactStopsRoutes(start, final, stops, exactStops)
+        self.routeHash.each do |key, value|
+            if key.name === start
+                start = key
+            end
+        end
+        routes = 0
+
+        stops = 0
+        if stops > exactStops
+            return routes
+        else
+            start.visited = true
+            edge = self.routeHash[start]
+
+            if edge
+                if edge.destination.name === final && stops === exactStops
+                    routes +=1
+                    edge = edge.next
+                    stops+=1
+
+                elsif !edge.destination.visited
+                    routes +=1
+                    routes +=self.exactStopsRoutes(edge.destination.name, final, stops, exactStops)
+                    stops -=1
                 end
                 edge = edge.next
             end
@@ -134,4 +172,5 @@ g.routeHash[D].add_next(Edge.new(D, E, 6))
 g.routeHash[E] = Edge.new(E, B, 3)
 
 # QUESTION 6: TRIPS STARTING AT X, ENDING AT Y WITH MAX STOPSS
-puts g.maxStops("C", "C", 3)
+# puts g.numStops("C", "C", 3)
+# puts g.exactStops("A", "C", 4)
