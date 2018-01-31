@@ -33,7 +33,7 @@ class Graph
         self.routeHash = {}
     end
 
-    def numStops(start, final, maxStops)
+    def maxStops(start, final, maxStops)
         # puts final
         return findRoutes(start, final, 0, maxStops)
     end
@@ -134,4 +134,4 @@ g.routeHash[D].add_next(Edge.new(D, E, 6))
 g.routeHash[E] = Edge.new(E, B, 3)
 
 # QUESTION 6: TRIPS STARTING AT X, ENDING AT Y WITH MAX STOPSS
-puts g.numStops("A", "C", 3)
+puts g.maxStops("C", "C", 3)
