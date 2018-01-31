@@ -32,6 +32,50 @@ class Graph
     def initialize
         self.routeHash = {}
     end
+
+    def numStops(start, final, maxStops)
+        # puts final
+        return findRoutes(start, final, 0, maxStops)
+    end
+
+    def findRoutes(start, final, depth, maxStops)
+        # TODO: make this a helper function find_node
+        self.routeHash.each do |key, value|
+            if key.name === start
+                start = key
+            end
+        end
+        # counter to keep track of how many routes meet the criteria
+        routes = 0
+
+        # # keeps track of stops in current route traversal
+        depth +=1
+        # need to wrap this in an if statement that checks for start and end
+        # if no start and end, put NO SUCH ROUTE
+        if depth > maxStops
+            return routes
+        else
+            start.visited = true
+            edge = self.routeHash[start]
+
+             if edge
+                if edge.destination.name === final
+                    routes +=1
+                    edge = edge.next
+                    depth+=1
+
+                elsif !edge.destination.visited
+                    routes +=1
+                    routes +=self.findRoutes(edge.destination.name, final, depth, maxStops)
+                    depth -=1
+                end
+                edge = edge.next
+            end
+        end
+
+        start.visited = false
+        return routes
+    end
 end
 
 # TODO: clean this up. working now, but only for this problem set. should be nice and recursive
@@ -55,6 +99,7 @@ def make_graph()
     end
 
     return g
+
 end
 
 def create_graph_list(file_path)
@@ -65,27 +110,30 @@ def create_graph_list(file_path)
     end
 end
 
-g = make_graph()
-puts g.routeHash
+
+# g = make_graph()
 
 # # MANUALLY ADDS THE NODES AND EDGES
-# g = Graph.new
-# graph_list = ["AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"]
-# A = Node.new("A")
-# B = Node.new("B")
-# C = Node.new("C")
-# D = Node.new("D")
-# E = Node.new("E")
-#
-#
-# g.routeHash[A] = Edge.new("A", "B", 5)
-# g.routeHash[A].add_next(Edge.new("A", "D", 5))
-# g.routeHash[A].next.add_next(Edge.new("A", "E", 7))
-# g.routeHash[B] = Edge.new("B", "C", 4)
-# g.routeHash[C] = Edge.new("C", "D", 8)
-# g.routeHash[C].add_next(Edge.new("C", "E", 2))
-# g.routeHash[D] = Edge.new("D", "C", 8)
-# g.routeHash[D].add_next(Edge.new("D", "E", 6))
-# g.routeHash[E] = Edge.new("E", "B", 3)
-#
+g = Graph.new
+graph_list = ["AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"]
+A = Node.new("A")
+B = Node.new("B")
+C = Node.new("C")
+D = Node.new("D")
+E = Node.new("E")
+
+
+g.routeHash[A] = Edge.new(A, B, 5)
+g.routeHash[A].add_next(Edge.new(A, D, 5))
+g.routeHash[A].next.add_next(Edge.new(A, E, 7))
+g.routeHash[B] = Edge.new(B, C, 4)
+g.routeHash[C] = Edge.new(C, D, 8)
+g.routeHash[C].add_next(Edge.new(C, E, 2))
+g.routeHash[D] = Edge.new(D, C, 8)
+g.routeHash[D].add_next(Edge.new(D, E, 6))
+g.routeHash[E] = Edge.new(E, B, 3)
+
 # puts g.routeHash
+puts g.numStops("C", "C", 3)
+
+# puts g.routeHash["A"].destination
