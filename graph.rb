@@ -33,17 +33,29 @@ class Graph
         self.routeHash = {}
     end
 
+    def find_node(start)
+        self.routeHash.each do |key, value|
+            if key.name === start
+                start = key
+            end
+        end
+        return start
+    end
+
     def numStops(start, final, maxStops)
         return findRoutes(start, final, 0, maxStops)
     end
 
     def findRoutes(start, final, depth, maxStops)
         # TODO: make this a helper function find_node
-        self.routeHash.each do |key, value|
-            if key.name === start
-                start = key
-            end
-        end
+        # self.routeHash.each do |key, value|
+        #     if key.name === start
+        #         start = key
+        #     end
+        # end
+        start = self.find_node(start)
+
+
         # counter to keep track of how many routes meet the criteria
         routes = 0
 
@@ -82,11 +94,12 @@ class Graph
     end
 
     def exactStopsRoutes(start, final, stops, exactStops)
-        self.routeHash.each do |key, value|
-            if key.name === start
-                start = key
-            end
-        end
+        # self.routeHash.each do |key, value|
+        #     if key.name === start
+        #         start = key
+        #     end
+        # end
+        start = self.find_node(start)
         routes = 0
 
         stops = 0
@@ -119,14 +132,13 @@ class Graph
         return findShortestDistance(start, finish, 0, 0)
     end
 
-
     def findShortestDistance(start, finish, weight=0, shortestDistance=0)
-        self.routeHash.each do |key, value|
-            if key.name === start
-                start = key
-            end
-        end
-
+        # self.routeHash.each do |key, value|
+        #     if key.name === start
+        #         start = key
+        #     end
+        # end
+        start = self.find_node(start)
         start.visited = true
         edge = self.routeHash[start]
 
@@ -150,6 +162,16 @@ class Graph
         start.visited = false
         return shortestDistance
     end
+
+    def routesWithin(start, finish, maxDistance)
+        return findRoutesWithin(start, finish, weight = 0, maxDistance)
+    end
+
+    def findRoutesWithin(start, finish, weight, maxDistance)
+        start = self.find_node(start)
+
+    end
+
 end
 
 # TODO: clean this up. working now, but only for this problem set. should be nice and recursive
@@ -214,4 +236,6 @@ g.routeHash[E] = Edge.new(E, B, 3)
 # QUESTION 8: SHORTEST DISTANCE BETWEEN X & Y
 # puts g.shortestDistance("A", "C")
 # QUESTION 9: SHORTEST DISTANCE BETWEEN X & Y
-puts g.shortestDistance("B", "B")
+# puts g.shortestDistance("B", "B")
+#QUESTION 10: ROUTES BETWEEN X AND Y WITHIN MAX DISTANCE
+puts g.routesWithin("C", "C", 30)
