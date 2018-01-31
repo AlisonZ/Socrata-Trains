@@ -130,7 +130,7 @@ class Graph
         start.visited = true
         edge = self.routeHash[start]
 
-        if edge
+        while edge
             if edge.destination.name === finish || !edge.destination.visited
                 weight += edge.weight
                 if edge.destination.name === finish
@@ -143,8 +143,8 @@ class Graph
                     shortestDistance = self.findShortestDistance(edge.destination.name, finish, weight, shortestDistance)
                     weight -=edge.weight
                 end
-                edge = edge.next
             end
+            edge = edge.next
         end
 
         start.visited = false
