@@ -114,6 +114,42 @@ class Graph
         start.visited = false
         return routes
     end
+
+    def shortestDistance(start, finish)
+        return findShortestDistance(start, finish, 0, 0)
+    end
+
+
+    def findShortestDistance(start, finish, weight=0, shortestDistance=0)
+        self.routeHash.each do |key, value|
+            if key.name === start
+                start = key
+            end
+        end
+
+        start.visited = true
+        edge = self.routeHash[start]
+
+        if edge
+            if edge.destination.name === finish || !edge.destination.visited
+                weight += edge.weight
+                if edge.destination.name === finish
+                    if shortestDistance === 0 || weight < shortestDistance
+                        shortestDistance = weight
+                        start.visited = false
+                        return shortestDistance
+                    end
+                elsif !edge.destination.visited
+                    shortestDistance = self.findShortestDistance(edge.destination.name, finish, weight, shortestDistance)
+                    weight -=edge.weight
+                end
+                edge = edge.next
+            end
+        end
+
+        start.visited = false
+        return shortestDistance
+    end
 end
 
 # TODO: clean this up. working now, but only for this problem set. should be nice and recursive
@@ -171,6 +207,11 @@ g.routeHash[D] = Edge.new(D, C, 8)
 g.routeHash[D].add_next(Edge.new(D, E, 6))
 g.routeHash[E] = Edge.new(E, B, 3)
 
-# QUESTION 6: TRIPS STARTING AT X, ENDING AT Y WITH MAX STOPSS
+# QUESTION 6: # OF TRIPS STARTING AT X, ENDING AT Y WITH MAX STOPS
 # puts g.numStops("C", "C", 3)
+# QUESTION 7: # OF TRIPS STARTING AT X, ENDING AT Y WITH EXACT STOPS
 # puts g.exactStops("A", "C", 4)
+# QUESTION 8: SHORTEST DISTANCE BETWEEN X & Y
+# puts g.shortestDistance("A", "C")
+# QUESTION 9: SHORTEST DISTANCE BETWEEN X & Y
+puts g.shortestDistance("B", "B")
