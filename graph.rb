@@ -133,7 +133,5 @@ g.routeHash[D] = Edge.new(D, C, 8)
 g.routeHash[D].add_next(Edge.new(D, E, 6))
 g.routeHash[E] = Edge.new(E, B, 3)
 
-# puts g.routeHash
-puts g.numStops("C", "C", 3)
-
-# puts g.routeHash["A"].destination
+# QUESTION 6: TRIPS STARTING AT X, ENDING AT Y WITH MAX STOPSS
+puts g.numStops("A", "C", 3)
