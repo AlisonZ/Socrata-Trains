@@ -52,7 +52,7 @@ class Graph
     end
 
     def numStops(start, final, maxStops)
-        puts findRoutes(start, final, 0, maxStops)
+        puts findRoutes(start.upcase, final.upcase, 0, maxStops)
     end
 
     def findRoutes(start, final, depth, maxStops)
@@ -92,7 +92,7 @@ class Graph
 
 
     def exactStops(start, final, exactStops)
-        puts exactStopsRoutes(start, final, 0, exactStops)
+        puts exactStopsRoutes(start.upcase, final.upcase, 0, exactStops)
     end
 
     def exactStopsRoutes(start, final, stops, exactStops)
@@ -131,7 +131,7 @@ class Graph
     end
 
     def shortestDistance(start, finish)
-        puts findShortestDistance(start, finish, 0, 0)
+        puts findShortestDistance(start.upcase, finish.upcase, 0, 0)
     end
 
     def findShortestDistance(start, finish, weight=0, shortestDistance=0)
