@@ -1,4 +1,4 @@
-#PROBLEM ONE: TRAINS
+# PROBLEM ONE: TRAINS
 
 Problem: The local commuter railroad services a number of towns in Kiwiland. Because of monetary concerns, all of the tracks are 'one-way.' That is, a route from Kaitaia to Invercargill does not imply the existence of a route from Invercargill to Kaitaia. In fact, even if both of these routes do happen to exist, they are distinct and are not necessarily the same distance!
 
@@ -40,7 +40,16 @@ Output #9: 9
 Output #10: 7
 
 # REQUIRED INSTALLATIONS
-* Ruby
+## Ruby
+* This program uses Ruby v. 2.4.0. If Ruby is not on your machine, complete the following steps, which use the Ruby Version Manager(RVM) for installation. If you have Ruby on your machine and need to update the version without RVM, look to the [Ruby docs](https://www.ruby-lang.org/en/documentation/installation/)
+
+### Ruby Version Manager
+* Install from the terminal with $ \curl -sSL https://get.rvm.io | bash -s stable
+* Verify that installation was successful with $ rvm -v
+
+### Ruby Install
+* Install ruby from terminal $ rvm install 2.4.0
+
 * Minitest
 * Rake
 
