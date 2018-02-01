@@ -1,30 +1,5 @@
-class Node
-    attr_accessor :name, :visited
-
-    def initialize(name)
-        @name = name
-        @visited = false
-    end
-end
-
-class Edge
-    attr_accessor :origin, :destination, :weight, :next
-
-    def initialize(origin, destination, weight)
-        @origin = origin
-        @destination = destination
-        @weight = weight
-        @next = false
-    end
-
-    # TODO: remove this function if it does not end up being used recursively
-    # can do the same thing now as just updating the .next feature of the edge currently on
-    def add_next(edge)
-        self.next = edge
-        return edge
-    end
-end
-
+require './Edge.rb'
+require './Node.rb'
 
 class Graph
     attr_accessor :routeHash, :graphList
@@ -248,7 +223,7 @@ g.routeHash[E] = Edge.new(E, B, 3)
 #QUESTION 5: EXACT ROUTE
 # g.exactRoute("A", "E", "D")
 # QUESTION 6: # OF TRIPS STARTING AT X, ENDING AT Y WITH MAX STOPS
-# g.numStops("C", "C", 3)
+g.numStops("C", "C", 3)
 # QUESTION 7: # OF TRIPS STARTING AT X, ENDING AT Y WITH EXACT STOPS
 # g.exactStops("A", "C", 4)
 # QUESTION 8: SHORTEST DISTANCE BETWEEN X & Y
