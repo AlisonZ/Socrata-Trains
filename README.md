@@ -68,15 +68,39 @@ Testing for this program uses Minitest and Rake
 
 # HOW TO RUN TESTS
 After installing Minitest and Rake, from terminal cd to project folder
-run $rake
+* run $rake
 
-#HOW TO PUT IN NEW DATA POINTS
-* comes preset with the inputs in problem set
-* in general note how to call the functions in the run-program.rb
-* write this first and have it be for the graph that already exists
-* go through each f(n) and note what it does and how to call it with new data
+#HOW TO RUN NEW SEARCHES
+* This program comes preset with the inputs in problem set and uses the routes and weights provided in Graph input(line 26 of this README)
+* Graph input is stored in lib/input.txt
 
-#HOW TO ADJUST THE graph (?) INPUT
-## put in a new txt file
-    - need to make new nodes and edges and stuff
-    - must be the same format of XY1, .txt
+## RUNNING PROGRAM WITH EXISTING GRAPH
+* To run program with alternate starting and destination nodes with stop and distance information, the methods in run-program.rb can be adjusted
+* The starting and destination nodes(stations) passed into these functions must be pre-existing in the graph created from the Graph input
+* Following is an overview of the methods, their functionality and how to adjust them with the current graph data
+
+1. exactRoute(args)
+    * see lines 22-31 of run-program.rb
+    * Goal: finds the distance of a specific route, i.e. the distance from A->E->D
+    * Arguments: takes an indeterminate number of arguments(stations), each entered as a String
+    * Adjustment: in run-program.rb call the method exactRoute on the graph created, pass in the stations of the route as individual string arguments
+
+2. numStops(start, final, maxStops)
+* see lines 32-33 of run-program.rb
+* Goal: Find the number of possible routes from start station to final station that don't have more stops than maxStops
+* Adjustment: in run-program.rb call the method numStops on the graph created, pass in the start and final stations as individual string arguments and the max number of stops
+
+3. exactStops(start, final, exactStops)
+* see lines 34-34 of run-program.rb
+* Goal: Find the number of possible routes from start station to final with exactly # of stops
+* Adjustment: in run-program.rb call the method exactRoute on the graph created, pass in the start and final stations as individual string arguments and the number of stops
+
+4. shortestDistance(start, final)
+* see lines 37-38 of run-program.rb
+* Goal: find the shortest distance (measured by weight between stations) from start to final node
+* Adjustment: in run-program.rb call the method shortestDistance on the graph created, pass in start and final stations as individual strings
+
+5. routesWithin(start, final, maxDistance)
+* see lines 40-41 of run-program.rb
+* Goal: find how many possible routes from start to finish that have a distance(weight) equal to or less than the maxDistance
+* Adjustment: in run-program.rb call the method routesWithin on the graph created, pass in start, final and maximum distance
