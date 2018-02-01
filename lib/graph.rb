@@ -26,17 +26,40 @@ class Graph
         return start
     end
 
+    def exactRoute(*args)
+        stations = args
+        routes = Hash.new
+
+        self.graphList.each do |route|
+            routes[route[0,2]] = route[2]
+        end
+
+        i = 0
+        distance = 0
+        while i < stations.length-1
+            route = stations[i].upcase+stations[i+1].upcase
+            if routes[route]
+                distance += routes[route].to_i
+                i+=1
+            else
+                return "NO SUCH ROUTE"
+            end
+        end
+
+        return distance
+    end
+
     def numStops(start, final, maxStops)
-        puts findRoutes(start.upcase, final.upcase, 0, maxStops)
+        return findRoutes(start.upcase, final.upcase, 0, maxStops)
     end
 
     def findRoutes(start, final, depth, maxStops)
         start = self.find_node(start)
         destination = self.find_node(final)
-        routes = 0
-        depth +=1
         # TODO:ideally this would check if a Node, but hit a Ruby snag
         if start.class != String && destination.class != String
+            depth +=1
+            routes = 0
             if depth > maxStops
                 return routes
             else
@@ -61,13 +84,13 @@ class Graph
             start.visited = false
             return routes
         else
-            puts "NO SUCH ROUTE"
+            return "NO SUCH ROUTE"
         end
     end
 
 
     def exactStops(start, final, exactStops)
-        puts exactStopsRoutes(start.upcase, final.upcase, 0, exactStops)
+        return exactStopsRoutes(start.upcase, final.upcase, 0, exactStops)
     end
 
     def exactStopsRoutes(start, final, stops, exactStops)
@@ -101,12 +124,12 @@ class Graph
             start.visited = false
             return routes
         else
-            puts "NO SUCH ROUTE"
+            return "NO SUCH ROUTE"
         end
     end
 
     def shortestDistance(start, finish)
-        puts findShortestDistance(start.upcase, finish.upcase, 0, 0)
+        return findShortestDistance(start.upcase, finish.upcase, 0, 0)
     end
 
     def findShortestDistance(start, finish, weight=0, shortestDistance=0)
@@ -137,31 +160,8 @@ class Graph
             start.visited = false
             return shortestDistance
         else
-            puts "NO SUCH ROUTE"
+            return "NO SUCH ROUTE"
         end
-    end
-
-    def exactRoute(*args)
-        stations = args
-        routes = Hash.new
-
-        self.graphList.each do |route|
-            routes[route[0,2]] = route[2]
-        end
-
-        i = 0
-        distance = 0
-        while i < stations.length-1
-            route = stations[i]+stations[i+1]
-            if routes[route]
-                distance += routes[route].to_i
-                i+=1
-            else
-                puts "NO SUCH ROUTE"
-                return
-            end
-        end
-        puts distance
     end
 end
 #
@@ -186,22 +186,22 @@ g.routeHash[E] = Edge.new(E, B, 3)
 #
 #
 # #QUESTION 1: EXACT ROUTE
-# # g.exactRoute("A", "B", "C")
+ # puts g.exactRoute("A", "B", "C")
 # #QUESTION 2: EXACT ROUTE
-# # g.exactRoute("A", "D")
+ # puts g.exactRoute("A", "D")
 # #QUESTION 3: EXACT ROUTE
-# # g.exactRoute("A", "D", "C")
+#  puts g.exactRoute("A", "D", "C")
 # #QUESTION 4: EXACT ROUTE
-# # g.exactRoute("A", "E", "B", "C", "D")
+#  puts g.exactRoute("A", "E", "B", "C", "D")
 # #QUESTION 5: EXACT ROUTE
-# # g.exactRoute("A", "E", "D")
+# puts g.exactRoute("A", "E", "D")
 # # QUESTION 6: # OF TRIPS STARTING AT X, ENDING AT Y WITH MAX STOPS
-g.numStops("C", "C", 3)
+ # puts g.numStops("C", "C", 3)
 # # QUESTION 7: # OF TRIPS STARTING AT X, ENDING AT Y WITH EXACT STOPS
-g.exactStops("A", "C", 4)
+ # puts g.exactStops("A", "C", 4)
 # # QUESTION 8: SHORTEST DISTANCE BETWEEN X & Y
-g.shortestDistance("A", "C")
+# puts g.shortestDistance("A", "C")
 # # QUESTION 9: SHORTEST DISTANCE BETWEEN X & Y
-g.shortestDistance("B", "B")
+#  puts g.shortestDistance("B", "B")
 # #QUESTION 10: ROUTES BETWEEN X AND Y WITHIN MAX DISTANCE
-# # g.routesWithin("C", "C", 30)
+# # puts g.routesWithin("C", "C", 30)
