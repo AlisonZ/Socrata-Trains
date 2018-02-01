@@ -177,40 +177,71 @@ class Graph
 
 
         # while edge
-            if edge
-                weight += edge.weight
-                # puts "if edge exists:  #{edge.origin.name}"
-                # puts "weight #{weight}"
-                if weight <= maxStops
-                    # puts "if weight is less: #{edge.origin.name}"
-                    if edge.destination.name === final
-                        # puts "if destination matches final #{edge.origin.name}"
-                        # puts "this is the final #{final}"
-                        routes +=1
-                        routes +=self.findRoutesWithin(edge.destination.name, final, weight, maxStops)
-                        # puts "edge in meets final #{edge.origin.name}"
-                        edge = edge.next
-                    else
-                        # puts "does not match final #{edge.origin.name}"
-                        weight -=edge.weight
-                        routes +=self.findRoutesWithin(edge.destination.name, final, weight, maxStops)
-                    end
-                else
-                    # puts "weight is over max stops #{edge.origin.name}"
-                    weight -=edge.weight
+        if edge
+            weight += edge.weight
+            # puts "if edge exists:  #{edge.origin.name}"
+            # puts "weight #{weight}"
+            if weight <= maxStops
+                # puts "if weight is less: #{edge.origin.name}"
+                if edge.destination.name === final
+                    # puts "if destination matches final #{edge.origin.name}"
+                    # puts "this is the final #{final}"
+                    routes +=1
+                    routes +=self.findRoutesWithin(edge.destination.name, final, weight, maxStops)
+                    # puts "edge in meets final #{edge.origin.name}"
                     edge = edge.next
-                    # puts "this is the new weight #{weight}"
+                else
+                    # puts "does not match final #{edge.origin.name}"
+                    weight -=edge.weight
+                    routes +=self.findRoutesWithin(edge.destination.name, final, weight, maxStops)
                 end
+            else
+                # puts "weight is over max stops #{edge.origin.name}"
+                weight -=edge.weight
+                edge = edge.next
+                # puts "this is the new weight #{weight}"
+            end
 
-                # if edge
-                #     edge = edge.next
-                # end
-                # puts "edge origin #{edge.origin.name}"
-                # puts "edge destination #{edge.destination.name}"
+            # if edge
+            #     edge = edge.next
+            # end
+            # puts "edge origin #{edge.origin.name}"
+            # puts "edge destination #{edge.destination.name}"
             # end
         end
         # puts "made it through all the conditionals"
         return routes
+    end
+
+    def exactRoute(*args)
+        graph_list = ["AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"]
+
+        routes = Hash.new
+        graph_list.each do |route|
+            routes[route[0,2]] = route[2]
+        end
+
+        # puts "Enter the stations list"
+        # stations = gets.chomp.upcase
+        # # TODO:
+        # #this only works for the specific input here with - between routes
+        # #need to get rid of trailing spaces
+        # stations = stations.split("-")
+        stations = args
+
+        i = 0
+        distance = 0
+        while i < stations.length-1
+            route = stations[i]+stations[i+1]
+            if routes[route]
+                distance += routes[route].to_i
+                i+=1
+            else
+                puts "NO SUCH ROUTE"
+                return
+            end
+        end
+        puts distance
     end
 
 
@@ -272,13 +303,24 @@ g.routeHash[D].add_next(Edge.new(D, E, 6))
 g.routeHash[E] = Edge.new(E, B, 3)
 
 
+graphList = create_graph_list("input.txt")
+#QUESTION 1: EXACT ROUTE
+g.exactRoute("A", "B", "C")
+#QUESTION 2: EXACT ROUTE
+g.exactRoute("A", "D")
+#QUESTION 3: EXACT ROUTE
+g.exactRoute("A", "D", "C")
+#QUESTION 4: EXACT ROUTE
+g.exactRoute("A", "E", "B", "C", "D")
+#QUESTION 5: EXACT ROUTE
+g.exactRoute("A", "E", "D")
 # QUESTION 6: # OF TRIPS STARTING AT X, ENDING AT Y WITH MAX STOPS
-# puts g.numStops("C", "C", 3)
+g.numStops("C", "C", 3)
 # QUESTION 7: # OF TRIPS STARTING AT X, ENDING AT Y WITH EXACT STOPS
-# puts g.exactStops("A", "C", 4)
+g.exactStops("A", "C", 4)
 # QUESTION 8: SHORTEST DISTANCE BETWEEN X & Y
-# puts g.shortestDistance("A", "C")
+g.shortestDistance("A", "C")
 # QUESTION 9: SHORTEST DISTANCE BETWEEN X & Y
-# puts g.shortestDistance("B", "B")
+g.shortestDistance("B", "B")
 #QUESTION 10: ROUTES BETWEEN X AND Y WITHIN MAX DISTANCE
-puts g.routesWithin("C", "C", 30)
+# g.routesWithin("C", "C", 30)
