@@ -175,53 +175,7 @@ class Graph
 
 
 
-    def routesWithin(start, final, maxStops)
-        return findRoutesWithin(start, final, 0, maxStops)
-    end
 
-    def findRoutesWithin(start, final, weight, maxStops)
-        routes = 0
-        start = self.find_node(start)
-        edge = self.routeHash[start]
-        # puts "after getting start node:  #{edge.origin.name}"
-
-
-        # while edge
-        if edge
-            weight += edge.weight
-            # puts "if edge exists:  #{edge.origin.name}"
-            # puts "weight #{weight}"
-            if weight <= maxStops
-                # puts "if weight is less: #{edge.origin.name}"
-                if edge.destination.name === final
-                    # puts "if destination matches final #{edge.origin.name}"
-                    # puts "this is the final #{final}"
-                    routes +=1
-                    routes +=self.findRoutesWithin(edge.destination.name, final, weight, maxStops)
-                    # puts "edge in meets final #{edge.origin.name}"
-                    edge = edge.next
-                else
-                    # puts "does not match final #{edge.origin.name}"
-                    weight -=edge.weight
-                    routes +=self.findRoutesWithin(edge.destination.name, final, weight, maxStops)
-                end
-            else
-                # puts "weight is over max stops #{edge.origin.name}"
-                weight -=edge.weight
-                edge = edge.next
-                # puts "this is the new weight #{weight}"
-            end
-
-            # if edge
-            #     edge = edge.next
-            # end
-            # puts "edge origin #{edge.origin.name}"
-            # puts "edge destination #{edge.destination.name}"
-            # end
-        end
-        # puts "made it through all the conditionals"
-        return routes
-    end
 
     def exactRoute(*args)
         stations = args
@@ -245,8 +199,6 @@ class Graph
         end
         puts distance
     end
-
-
 end
 
 # TODO: clean this up. working now, but only for this problem set. should be nice and recursive
