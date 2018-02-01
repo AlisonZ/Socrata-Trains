@@ -57,19 +57,9 @@ class Graph
     end
 
     def findRoutes(start, final, depth, maxStops)
-        # TODO: make this a helper function find_node
-        # self.routeHash.each do |key, value|
-        #     if key.name === start
-        #         start = key
-        #     end
-        # end
         start = self.find_node(start)
-
-
-        # counter to keep track of how many routes meet the criteria
         routes = 0
 
-        # # keeps track of stops in current route traversal
         depth +=1
         # need to wrap this in an if statement that checks for start and end
         # if no start and end, put NO SUCH ROUTE
@@ -104,11 +94,6 @@ class Graph
     end
 
     def exactStopsRoutes(start, final, stops, exactStops)
-        # self.routeHash.each do |key, value|
-        #     if key.name === start
-        #         start = key
-        #     end
-        # end
         start = self.find_node(start)
         routes = 0
 
@@ -143,11 +128,6 @@ class Graph
     end
 
     def findShortestDistance(start, finish, weight=0, shortestDistance=0)
-        # self.routeHash.each do |key, value|
-        #     if key.name === start
-        #         start = key
-        #     end
-        # end
         start = self.find_node(start)
         start.visited = true
         edge = self.routeHash[start]
@@ -172,10 +152,6 @@ class Graph
         start.visited = false
         return shortestDistance
     end
-
-
-
-
 
     def exactRoute(*args)
         stations = args
