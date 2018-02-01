@@ -1,5 +1,5 @@
 require_relative 'spec_helper'
-require_relative '../lib/graph.rb'
+require_relative '../lib/run-program.rb'
 
 describe "Node class" do
     before do
@@ -78,6 +78,7 @@ describe "Graph class" do
     it "creates a graph" do
         @my_graph.must_be_instance_of Graph
     end
+
     describe "exactRoute" do
         it "takes an exact route and finds the distance" do
             output1 = @my_graph.exactRoute("A", "B", "C")

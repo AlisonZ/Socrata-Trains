@@ -1,4 +1,4 @@
-PROBLEM ONE: TRAINS
+#PROBLEM ONE: TRAINS
 
 Problem: The local commuter railroad services a number of towns in Kiwiland. Because of monetary concerns, all of the tracks are 'one-way.' That is, a route from Kaitaia to Invercargill does not imply the existence of a route from Invercargill to Kaitaia. In fact, even if both of these routes do happen to exist, they are distinct and are not necessarily the same distance!
 
@@ -38,3 +38,27 @@ Output #7: 3
 Output #8: 9
 Output #9: 9
 Output #10: 7
+
+# REQUIRED INSTALLATIONS
+* Ruby
+* Minitest
+* Rake
+
+
+# HOW TO RUN
+* git clone
+* cd into folder
+* run file
+* comes preset with the inputs in problem set
+
+# HOW TO RUN TESTS
+
+#HOW TO PUT IN NEW DATA POINTS
+* in general note how to call the functions in the run-program.rb
+* write this first and have it be for the graph that already exists
+* go through each f(n) and note what it does and how to call it with new data
+
+#HOW TO ADJUST THE graph (?) INPUT
+## put in a new txt file
+    - need to make new nodes and edges and stuff
+    - must be the same format of XY1, .txt

@@ -19,7 +19,6 @@ g.routeHash[D].add_next(Edge.new(D, E, 6))
 g.routeHash[E] = Edge.new(E, B, 3)
 
 
-#
 #QUESTION 1: EXACT ROUTE
  puts "Output #1: #{g.exactRoute("A", "B", "C")}"
 #QUESTION 2: EXACT ROUTE
