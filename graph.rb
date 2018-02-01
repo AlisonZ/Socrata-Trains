@@ -42,7 +42,6 @@ class Graph
         end
     end
 
-
     def find_node(start)
         self.routeHash.each do |key, value|
             if key.name === start
@@ -58,34 +57,37 @@ class Graph
 
     def findRoutes(start, final, depth, maxStops)
         start = self.find_node(start)
+        destination = self.find_node(final)
         routes = 0
-
         depth +=1
-        # need to wrap this in an if statement that checks for start and end
-        # if no start and end, put NO SUCH ROUTE
-        if depth > maxStops
+        # TODO:ideally this would check if a Node, but hit a Ruby snag
+        if start.class != String && destination.class != String
+            if depth > maxStops
+                return routes
+            else
+                start.visited = true
+                edge = self.routeHash[start]
+
+                if edge
+                    if edge.destination.name === final
+                        routes +=1
+                        edge = edge.next
+                        depth+=1
+
+                    elsif !edge.destination.visited
+                        routes +=1
+                        routes +=self.findRoutes(edge.destination.name, final, depth, maxStops)
+                        depth -=1
+                    end
+                    edge = edge.next
+                end
+            end
+
+            start.visited = false
             return routes
         else
-            start.visited = true
-            edge = self.routeHash[start]
-
-            if edge
-                if edge.destination.name === final
-                    routes +=1
-                    edge = edge.next
-                    depth+=1
-
-                elsif !edge.destination.visited
-                    routes +=1
-                    routes +=self.findRoutes(edge.destination.name, final, depth, maxStops)
-                    depth -=1
-                end
-                edge = edge.next
-            end
+            puts "NO SUCH ROUTE"
         end
-
-        start.visited = false
-        return routes
     end
 
 
@@ -95,32 +97,37 @@ class Graph
 
     def exactStopsRoutes(start, final, stops, exactStops)
         start = self.find_node(start)
+        destination = self.find_node(final)
         routes = 0
-
         stops = 0
-        if stops > exactStops
+
+        if start.class != String && destination.class != String
+            if stops > exactStops
+                return routes
+            else
+                start.visited = true
+                edge = self.routeHash[start]
+
+                if edge
+                    if edge.destination.name === final && stops === exactStops
+                        routes +=1
+                        edge = edge.next
+                        stops+=1
+
+                    elsif !edge.destination.visited
+                        routes +=1
+                        routes +=self.exactStopsRoutes(edge.destination.name, final, stops, exactStops)
+                        stops -=1
+                    end
+                    edge = edge.next
+                end
+            end
+
+            start.visited = false
             return routes
         else
-            start.visited = true
-            edge = self.routeHash[start]
-
-            if edge
-                if edge.destination.name === final && stops === exactStops
-                    routes +=1
-                    edge = edge.next
-                    stops+=1
-
-                elsif !edge.destination.visited
-                    routes +=1
-                    routes +=self.exactStopsRoutes(edge.destination.name, final, stops, exactStops)
-                    stops -=1
-                end
-                edge = edge.next
-            end
+            puts "NO SUCH ROUTE"
         end
-
-        start.visited = false
-        return routes
     end
 
     def shortestDistance(start, finish)
@@ -129,28 +136,34 @@ class Graph
 
     def findShortestDistance(start, finish, weight=0, shortestDistance=0)
         start = self.find_node(start)
-        start.visited = true
-        edge = self.routeHash[start]
+        destination = self.find_node(finish)
 
-        while edge
-            if edge.destination.name === finish || !edge.destination.visited
-                weight += edge.weight
-                if edge.destination.name === finish
-                    if shortestDistance === 0 || weight < shortestDistance
-                        shortestDistance = weight
-                        start.visited = false
-                        return shortestDistance
+        if start.class != String && destination.class != String
+            start.visited = true
+            edge = self.routeHash[start]
+
+            while edge
+                if edge.destination.name === finish || !edge.destination.visited
+                    weight += edge.weight
+                    if edge.destination.name === finish
+                        if shortestDistance === 0 || weight < shortestDistance
+                            shortestDistance = weight
+                            start.visited = false
+                            return shortestDistance
+                        end
+                    elsif !edge.destination.visited
+                        shortestDistance = self.findShortestDistance(edge.destination.name, finish, weight, shortestDistance)
+                        weight -=edge.weight
                     end
-                elsif !edge.destination.visited
-                    shortestDistance = self.findShortestDistance(edge.destination.name, finish, weight, shortestDistance)
-                    weight -=edge.weight
                 end
+                edge = edge.next
             end
-            edge = edge.next
-        end
 
-        start.visited = false
-        return shortestDistance
+            start.visited = false
+            return shortestDistance
+        else
+            puts "NO SUCH ROUTE"
+        end
     end
 
     def exactRoute(*args)
@@ -225,22 +238,22 @@ g.routeHash[E] = Edge.new(E, B, 3)
 
 
 #QUESTION 1: EXACT ROUTE
-g.exactRoute("A", "B", "C")
+# g.exactRoute("A", "B", "C")
 #QUESTION 2: EXACT ROUTE
-g.exactRoute("A", "D")
+# g.exactRoute("A", "D")
 #QUESTION 3: EXACT ROUTE
-g.exactRoute("A", "D", "C")
+# g.exactRoute("A", "D", "C")
 #QUESTION 4: EXACT ROUTE
-g.exactRoute("A", "E", "B", "C", "D")
+# g.exactRoute("A", "E", "B", "C", "D")
 #QUESTION 5: EXACT ROUTE
-g.exactRoute("A", "E", "D")
+# g.exactRoute("A", "E", "D")
 # QUESTION 6: # OF TRIPS STARTING AT X, ENDING AT Y WITH MAX STOPS
-puts g.numStops("C", "C", 3)
+# puts g.numStops("C", "C", 3)
 # QUESTION 7: # OF TRIPS STARTING AT X, ENDING AT Y WITH EXACT STOPS
-puts g.exactStops("A", "C", 4)
+# puts g.exactStops("A", "C", 4)
 # QUESTION 8: SHORTEST DISTANCE BETWEEN X & Y
-puts g.shortestDistance("A", "C")
+# puts g.shortestDistance("A", "C")
 # QUESTION 9: SHORTEST DISTANCE BETWEEN X & Y
-puts g.shortestDistance("B", "B")
+puts g.shortestDistance("B", "Z")
 #QUESTION 10: ROUTES BETWEEN X AND Y WITHIN MAX DISTANCE
 # g.routesWithin("C", "C", 30)
