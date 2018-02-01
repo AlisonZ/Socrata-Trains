@@ -70,7 +70,7 @@ Testing for this program uses Minitest and Rake
 After installing Minitest and Rake, from terminal cd to project folder
 * run $rake
 
-#HOW TO RUN NEW SEARCHES
+# HOW TO RUN NEW SEARCHES
 * This program comes preset with the inputs in problem set and uses the routes and weights provided in Graph input(line 26 of this README)
 * Graph input is stored in lib/input.txt
 
