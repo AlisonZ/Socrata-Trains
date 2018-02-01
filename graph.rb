@@ -27,11 +27,21 @@ end
 
 
 class Graph
-    attr_accessor :routeHash
+    attr_accessor :routeHash, :graphList
 
     def initialize
         self.routeHash = {}
+        self.graphList = []
     end
+
+    def createGraphList(file_path)
+        File.open(file_path, 'r') do |f|
+            f.each_line do |line|
+                return line.split(",").map(&:strip)
+            end
+        end
+    end
+
 
     def find_node(start)
         self.routeHash.each do |key, value|
@@ -214,20 +224,12 @@ class Graph
     end
 
     def exactRoute(*args)
-        graph_list = ["AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"]
-
+        stations = args
         routes = Hash.new
-        graph_list.each do |route|
+
+        self.graphList.each do |route|
             routes[route[0,2]] = route[2]
         end
-
-        # puts "Enter the stations list"
-        # stations = gets.chomp.upcase
-        # # TODO:
-        # #this only works for the specific input here with - between routes
-        # #need to get rid of trailing spaces
-        # stations = stations.split("-")
-        stations = args
 
         i = 0
         distance = 0
@@ -271,20 +273,11 @@ def make_graph()
 
 end
 
-def create_graph_list(file_path)
-    File.open(file_path, 'r') do |f|
-        f.each_line do |line|
-            return graph_list = line.split(",").map(&:strip)
-        end
-    end
-end
-
-
 # g = make_graph()
 
 # # MANUALLY ADDS THE NODES AND EDGES
 g = Graph.new
-graph_list = ["AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"]
+g.graphList = g.createGraphList("input.txt")
 A = Node.new("A")
 B = Node.new("B")
 C = Node.new("C")
@@ -303,7 +296,6 @@ g.routeHash[D].add_next(Edge.new(D, E, 6))
 g.routeHash[E] = Edge.new(E, B, 3)
 
 
-graphList = create_graph_list("input.txt")
 #QUESTION 1: EXACT ROUTE
 g.exactRoute("A", "B", "C")
 #QUESTION 2: EXACT ROUTE
@@ -315,12 +307,12 @@ g.exactRoute("A", "E", "B", "C", "D")
 #QUESTION 5: EXACT ROUTE
 g.exactRoute("A", "E", "D")
 # QUESTION 6: # OF TRIPS STARTING AT X, ENDING AT Y WITH MAX STOPS
-g.numStops("C", "C", 3)
+puts g.numStops("C", "C", 3)
 # QUESTION 7: # OF TRIPS STARTING AT X, ENDING AT Y WITH EXACT STOPS
-g.exactStops("A", "C", 4)
+puts g.exactStops("A", "C", 4)
 # QUESTION 8: SHORTEST DISTANCE BETWEEN X & Y
-g.shortestDistance("A", "C")
+puts g.shortestDistance("A", "C")
 # QUESTION 9: SHORTEST DISTANCE BETWEEN X & Y
-g.shortestDistance("B", "B")
+puts g.shortestDistance("B", "B")
 #QUESTION 10: ROUTES BETWEEN X AND Y WITHIN MAX DISTANCE
 # g.routesWithin("C", "C", 30)
