@@ -52,7 +52,7 @@ class Graph
     end
 
     def numStops(start, final, maxStops)
-        return findRoutes(start, final, 0, maxStops)
+        puts findRoutes(start, final, 0, maxStops)
     end
 
     def findRoutes(start, final, depth, maxStops)
@@ -92,7 +92,7 @@ class Graph
 
 
     def exactStops(start, final, exactStops)
-        return exactStopsRoutes(start, final, 0, exactStops)
+        puts exactStopsRoutes(start, final, 0, exactStops)
     end
 
     def exactStopsRoutes(start, final, stops, exactStops)
@@ -131,7 +131,7 @@ class Graph
     end
 
     def shortestDistance(start, finish)
-        return findShortestDistance(start, finish, 0, 0)
+        puts findShortestDistance(start, finish, 0, 0)
     end
 
     def findShortestDistance(start, finish, weight=0, shortestDistance=0)
@@ -248,12 +248,12 @@ g.routeHash[E] = Edge.new(E, B, 3)
 #QUESTION 5: EXACT ROUTE
 # g.exactRoute("A", "E", "D")
 # QUESTION 6: # OF TRIPS STARTING AT X, ENDING AT Y WITH MAX STOPS
-# puts g.numStops("C", "C", 3)
+# g.numStops("C", "C", 3)
 # QUESTION 7: # OF TRIPS STARTING AT X, ENDING AT Y WITH EXACT STOPS
-# puts g.exactStops("A", "C", 4)
+# g.exactStops("A", "C", 4)
 # QUESTION 8: SHORTEST DISTANCE BETWEEN X & Y
-# puts g.shortestDistance("A", "C")
+# g.shortestDistance("A", "C")
 # QUESTION 9: SHORTEST DISTANCE BETWEEN X & Y
-puts g.shortestDistance("B", "Z")
+# g.shortestDistance("B", "B")
 #QUESTION 10: ROUTES BETWEEN X AND Y WITHIN MAX DISTANCE
 # g.routesWithin("C", "C", 30)
