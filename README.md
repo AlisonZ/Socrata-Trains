@@ -41,7 +41,7 @@ Output #10: 7
 
 # REQUIRED INSTALLATIONS
 ## Ruby
-* This program uses Ruby v. 2.4.0. If Ruby is not on your machine, complete the following steps, which use the Ruby Version Manager(RVM) for installation. If you have Ruby on your machine and need to update the version without RVM, look to the [Ruby docs](https://www.ruby-lang.org/en/documentation/installation/)
+This program uses Ruby v. 2.4.0. If Ruby is not on your machine, complete the following steps, which use the Ruby Version Manager(RVM) for installation. If you have Ruby on your machine and need to update the version without RVM, look to the [Ruby docs](https://www.ruby-lang.org/en/documentation/installation/)
 
 ### Ruby Version Manager
 * Install from the terminal with $ \curl -sSL https://get.rvm.io | bash -s stable
@@ -50,19 +50,28 @@ Output #10: 7
 ### Ruby Install
 * Install ruby from terminal $ rvm install 2.4.0
 
-* Minitest
-* Rake
+### Set-up Testing
+Testing for this program uses Minitest and Rake
+* Minitest: From the terminal run  $ gem install minitest -v 5.8.4
+* Rake: $ gem install rake
 
 
-# HOW TO RUN
-* git clone
-* cd into folder
-* run file
-* comes preset with the inputs in problem set
+# HOW TO RUN THE CODE
+### Clone and Run Repo
+1. From terminal cd to folder to clone project
+* $ git clone https://github.com/AlisonZ/Socrata-Trains.git
+
+2. cd into folder
+* $ cd Socrate-Trains
+3. Run file
+* $ ruby lib/run-program.rb
 
 # HOW TO RUN TESTS
+After installing Minitest and Rake, from terminal cd to project folder
+run $rake
 
 #HOW TO PUT IN NEW DATA POINTS
+* comes preset with the inputs in problem set
 * in general note how to call the functions in the run-program.rb
 * write this first and have it be for the graph that already exists
 * go through each f(n) and note what it does and how to call it with new data
