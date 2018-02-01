@@ -59,7 +59,7 @@ Testing for this program uses Minitest and Rake
 # HOW TO RUN THE CODE
 ### Clone and Run Repo
 1. From terminal cd to folder to clone project
-* $ git clone https://github.com/AlisonZ/Socrata-Trains.git
+* git clone from  https://github.com/AlisonZ/Socrata-Trains.git
 
 2. cd into folder
 * $ cd Socrate-Trains
