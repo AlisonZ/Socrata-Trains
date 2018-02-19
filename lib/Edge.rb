@@ -5,7 +5,7 @@ class Edge
         @origin = origin
         @destination = destination
         @weight = weight
-        @next = false
+        @next = true
     end
 
     # TODO: remove this function if it does not end up being used recursively
